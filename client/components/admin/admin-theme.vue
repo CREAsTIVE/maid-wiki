@@ -140,7 +140,8 @@ export default {
     return {
       loading: false,
       themes: [
-        { text: 'Default', author: 'requarks.io', value: 'default', isInstalled: true, installDate: '', updatedAt: '' }
+        { text: 'Default', author: 'requarks.io', value: 'default', isInstalled: true, installDate: '', updatedAt: '' },
+        { text: 'Maid', author: 'CREAsTIVE', value: 'maid', isInstalled: false, installDate: '', updatedAt: '' }
       ],
       iconsets: [
         { text: 'Material Design Icons (default)', value: 'mdi' },
