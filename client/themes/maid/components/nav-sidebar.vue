@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div.nav-sidebar
     .pa-3.d-flex(v-if='navMode === `MIXED`', :class='$vuetify.theme.dark ? `grey darken-5` : `blue darken-3`')
       v-btn(
         depressed
@@ -29,9 +29,9 @@
         .body-2.text-none {{$t('common:sidebar.mainMenu')}}
     v-divider
     //-> Custom Navigation
-    v-list.py-2(v-if='currentMode === `custom`', dense, :class='color', :dark='dark')
+    v-list.py-2.custom-navigation(v-if='currentMode === `custom`', dense, :class='color', :dark='dark')
       template(v-for='item of items')
-        v-list-item(
+        v-list-item.custom-navigation-item(
           v-if='item.k === `link`'
           :href='item.t'
           :target='item.y === `externalblank` ? `_blank` : `_self`'
@@ -45,7 +45,7 @@
               style="width: 64px; height: 64px; image-rendering: pixelated;"
             )
             v-icon(v-else) {{ item.c }}
-          v-list-item-title(style="font-size: 1.4em; line-height: 2em") {{ item.l }}
+          v-list-item-title() {{ item.l }}
         v-divider.my-2(v-else-if='item.k === `divider`')
         v-subheader.pl-4(v-else-if='item.k === `header`') {{ item.l }}
     //-> Browse
