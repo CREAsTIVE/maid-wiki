@@ -45,7 +45,7 @@
               style="width: 64px; height: 64px; image-rendering: pixelated;"
             )
             v-icon(v-else) {{ item.c }}
-          v-list-item-title(style="font-size: 1.5em; line-height: 2em") {{ item.l }}
+          v-list-item-title(style="font-size: 1.4em; line-height: 2em") {{ item.l }}
         v-divider.my-2(v-else-if='item.k === `divider`')
         v-subheader.pl-4(v-else-if='item.k === `header`') {{ item.l }}
     //-> Browse
