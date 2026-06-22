@@ -22,7 +22,16 @@ $c-accent: #fcf9cd;
   color: $c-accent;
 }
 
+.v-application {
+  .primary {
+    background-color: $c-accent !important;
+    border-color: $c-accent !important;
 
+    .v-icon {
+      color: mc('grey', '800');
+    }
+  }
+}
 
 .nav-sidebar {
   .custom-navigation {
@@ -64,7 +73,7 @@ $c-accent: #fcf9cd;
   a {
     color: $c-accent;
     text-decoration: none;
-    text-shadow: neon-glow-shadow($c-accent, 0.4);
+    // text-shadow: neon-glow-shadow($c-accent, 0.4);
 
     &.is-internal-link.is-invalid-page {
       color: mc('red', '700');
