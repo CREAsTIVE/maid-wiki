@@ -31,16 +31,21 @@
     //-> Custom Navigation
     v-list.py-2(v-if='currentMode === `custom`', dense, :class='color', :dark='dark')
       template(v-for='item of items')
-        v-list-item.block-boxed(
+        v-list-item(
           v-if='item.k === `link`'
           :href='item.t'
           :target='item.y === `externalblank` ? `_blank` : `_self`'
           :rel='item.y === `externalblank` ? `noopener` : ``'
           )
-          v-list-item-avatar(size='24', tile)
-            v-icon(v-if='item.c.match(/fa[a-z] fa-/)', size='19') {{ item.c }}
+          v-list-item-avatar(size='64', tile)
+            v-icon(v-if='item.c.match(/fa[a-z] fa-/)', size='64') {{ item.c }}
+            img(
+              v-else-if='item.c.startsWith("res-")',
+              :src = '`/${item.c.substr(4)}`',
+              style="width: 64px; height: 64px; image-rendering: pixelated;"
+            )
             v-icon(v-else) {{ item.c }}
-          v-list-item-title {{ item.l }}
+          v-list-item-title(style="font-size: 1.5em; line-height: 2em") {{ item.l }}
         v-divider.my-2(v-else-if='item.k === `divider`')
         v-subheader.pl-4(v-else-if='item.k === `header`') {{ item.l }}
     //-> Browse
