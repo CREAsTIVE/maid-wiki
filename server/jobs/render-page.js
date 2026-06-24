@@ -15,7 +15,7 @@ module.exports = async (pageId) => {
     if (!page) {
       throw new Error('Invalid Page Id')
     }
-
+    await WIKI.models.renderers.reloadRenderersScripts()
     await WIKI.models.renderers.fetchDefinitions()
     const pipeline = await WIKI.models.renderers.getRenderingPipeline(page.contentType)
 

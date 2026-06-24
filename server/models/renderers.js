@@ -98,6 +98,8 @@ module.exports = class Renderer extends Model {
           WIKI.logger.info(`Removed renderer ${renderer.key} because it is no longer present in the modules folder: [ OK ]`)
         }
       }
+
+      await Renderer.reloadRenderersScripts()
     } catch (err) {
       WIKI.logger.error(`Failed to scan or load new renderers: [ FAILED ]`)
       WIKI.logger.error(err)
@@ -105,6 +107,19 @@ module.exports = class Renderer extends Model {
         trx.rollback()
       }
     }
+  }
+
+  static async reloadRenderersScripts() {
+    WIKI.scriptAssets = []
+    const renderersDb = await WIKI.models.renderers.query().where('isEnabled', true)
+    for (let render of renderersDb) {
+      let module = require(`../modules/rendering/${_.kebabCase(render.key)}/renderer.js`)
+      if (module.script) {
+        WIKI.scriptAssets.push(module.script)
+      }
+    }
+
+    WIKI.logger.info(`Render scripts reloaded: ${WIKI.scriptAssets.length}`)
   }
 
   static async getRenderingPipeline(contentType) {
