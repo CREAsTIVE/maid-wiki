@@ -53,6 +53,35 @@ $c-accent: #fcf9cd;
   }
 }
 
+/*
+When using markdown html block syntax, i. e.
+```
+<element>
+
+hii!!
+
+</element>
+```
+it produces <p>:
+```
+<element><p>hii!!</p></element>
+```
+so we need to fix that:
+*/
+
+.v-main .contents {
+  details {
+    summary {
+      p {
+        display: inline;
+      }
+    }
+    & > p:first-of-type {
+      padding-top: 0;
+    }
+  }
+}
+
 .v-main .contents {
   color: mc('grey', '800');
   padding: .5rem 0 50px;
