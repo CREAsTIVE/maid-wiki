@@ -1066,6 +1066,7 @@ so we need to fix that:
   // ---------------------------------
 
   img {
+    image-rendering: pixelated;
     max-width: 100%;
 
     &.align-left {
