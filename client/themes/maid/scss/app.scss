@@ -82,6 +82,42 @@ so we need to fix that:
   }
 }
 
+// Custom classes:
+.v-main .contents {
+  .flex {
+    display: flex;
+
+    &.vertical {
+      flex-direction: column;
+    }
+
+    &.all-center {
+      justify-content: center;
+      align-content: center;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6, p {
+    &.inline {
+      width: fit-content;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    &.no-line::after {
+      display: none !important;
+    }
+
+    &.inline {
+      &::after {
+        display: none !important;
+      }
+    }
+  }
+}
+
 .v-main .contents {
   color: mc('grey', '800');
   padding: .5rem 0 50px;
@@ -93,6 +129,12 @@ so we need to fix that:
 
   @at-root .theme--dark & {
     color: mc('grey', '300');
+  }
+
+  // DETAILS
+
+  details {
+
   }
 
   // ---------------------------------
