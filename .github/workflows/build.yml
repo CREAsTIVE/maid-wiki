@@ -227,7 +227,7 @@ jobs:
   beta:
     name: Publish Beta Images
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
+    # if: startsWith(github.ref, 'refs/tags/v')
     needs: [build, arm, windows]
     permissions:
       packages: write
@@ -285,45 +285,45 @@ jobs:
     #     username: ${{ secrets.DOCKERHUB_USERNAME }}
     #     password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v4
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Login to GitHub Container Registry
+    #   uses: docker/login-action@v4
+    #   with:
+    #     registry: ghcr.io
+    #     username: ${{ github.repository_owner }}
+    #     password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Create and Push Manifests
-      run: |
-        echo "Fetching semver tool..."
-        curl -LJO https://static.requarks.io/semver
-        chmod +x semver
+    # - name: Create and Push Manifests
+    #   run: |
+    #     echo "Fetching semver tool..."
+    #     curl -LJO https://static.requarks.io/semver
+    #     chmod +x semver
 
-        MAJOR=`./semver get major $REL_VERSION_STRICT`
-        MINOR=`./semver get minor $REL_VERSION_STRICT`
-        MAJORMINOR="$MAJOR.$MINOR"
+    #     MAJOR=`./semver get major $REL_VERSION_STRICT`
+    #     MINOR=`./semver get minor $REL_VERSION_STRICT`
+    #     MAJORMINOR="$MAJOR.$MINOR"
 
-        echo "Using major $MAJOR and minor $MINOR..."
-        echo "Creating the manifests..."
+    #     echo "Using major $MAJOR and minor $MINOR..."
+    #     echo "Creating the manifests..."
 
-        # docker manifest create requarks/wiki:$REL_VERSION_STRICT requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT
-        # docker manifest create requarks/wiki:$MAJOR requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT
-        # ocker manifest create requarks/wiki:$MAJORMINOR requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT
-        # ocker manifest create requarks/wiki:latest requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT
-        # ocker manifest create ghcr.io/requarks/wiki:$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT
-        # ocker manifest create ghcr.io/requarks/wiki:$MAJOR ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT
-        # ocker manifest create ghcr.io/requarks/wiki:$MAJORMINOR ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT
-        # ocker manifest create ghcr.io/requarks/wiki:latest ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT
+    #     # docker manifest create requarks/wiki:$REL_VERSION_STRICT requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT
+    #     # docker manifest create requarks/wiki:$MAJOR requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT
+    #     # ocker manifest create requarks/wiki:$MAJORMINOR requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT
+    #     # ocker manifest create requarks/wiki:latest requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT
+    #     # ocker manifest create ghcr.io/requarks/wiki:$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT
+    #     # ocker manifest create ghcr.io/requarks/wiki:$MAJOR ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT
+    #     # ocker manifest create ghcr.io/requarks/wiki:$MAJORMINOR ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT
+    #     # ocker manifest create ghcr.io/requarks/wiki:latest ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT
 
-        echo "Pushing the manifests..."
+    #     echo "Pushing the manifests..."
 
-        # docker manifest push -p requarks/wiki:$REL_VERSION_STRICT
-        # docker manifest push -p requarks/wiki:$MAJOR
-        # docker manifest push -p requarks/wiki:$MAJORMINOR
-        # docker manifest push -p requarks/wiki:latest
-        # docker manifest push -p ghcr.io/requarks/wiki:$REL_VERSION_STRICT
-        # docker manifest push -p ghcr.io/requarks/wiki:$MAJOR
-        # docker manifest push -p ghcr.io/requarks/wiki:$MAJORMINOR
-        # docker manifest push -p ghcr.io/requarks/wiki:latest
+    #     # docker manifest push -p requarks/wiki:$REL_VERSION_STRICT
+    #     # docker manifest push -p requarks/wiki:$MAJOR
+    #     # docker manifest push -p requarks/wiki:$MAJORMINOR
+    #     # docker manifest push -p requarks/wiki:latest
+    #     # docker manifest push -p ghcr.io/requarks/wiki:$REL_VERSION_STRICT
+    #     # docker manifest push -p ghcr.io/requarks/wiki:$MAJOR
+    #     # docker manifest push -p ghcr.io/requarks/wiki:$MAJORMINOR
+    #     # docker manifest push -p ghcr.io/requarks/wiki:latest
 
     - name: Download Linux Build
       uses: actions/download-artifact@v8
@@ -367,22 +367,68 @@ jobs:
     #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
-    - name: Notify Telegram Channel
-      uses: appleboy/telegram-action@v1.0.1
-      with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        format: markdown
-        disable_web_page_preview: true
-        message: |
-          Wiki.js *${{ github.ref_name }}* has been released!
-          See [release notes](https://github.com/requarks/wiki/releases) for details.
+    # - name: Notify Telegram Channel
+    #   uses: appleboy/telegram-action@v1.0.1
+    #   with:
+    #     to: ${{ secrets.TELEGRAM_TO }}
+    #     token: ${{ secrets.TELEGRAM_TOKEN }}
+    #     format: markdown
+    #     disable_web_page_preview: true
+    #     message: |
+    #       Wiki.js *${{ github.ref_name }}* has been released!
+    #       See [release notes](https://github.com/requarks/wiki/releases) for details.
 
-    - name: Notify Discord Channel
-      uses: sebastianpopp/discord-action@v2.0
+    # - name: Notify Discord Channel
+    #   uses: sebastianpopp/discord-action@v2.0
+    #   with:
+    #     webhook: ${{ secrets.DISCORD_WEBHOOK }}
+    #     message: Wiki.js ${{ github.ref_name }} has been released! See https://github.com/requarks/wiki/releases for details.
+
+  release-nightly:
+    name: Publish Nightly Release
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: prod
+    needs: [beta]
+    permissions:
+      packages: write
+      contents: write
+
+    steps:
+    - name: Set Version Variables
+      run: |
+        echo "Using TAG mode: $GITHUB_REF_NAME"
+        echo "REL_VERSION_STRICT=${GITHUB_REF_NAME#?}" >> $GITHUB_ENV
+
+    - name: Download Linux Build
+      uses: actions/download-artifact@v8
       with:
-        webhook: ${{ secrets.DISCORD_WEBHOOK }}
-        message: Wiki.js ${{ github.ref_name }} has been released! See https://github.com/requarks/wiki/releases for details.
+        name: drop
+        path: drop
+
+    - name: Download Windows Build
+      uses: actions/download-artifact@v8
+      with:
+        name: drop-win
+        path: drop-win
+
+    - name: Generate Nightly Body
+      id: body
+      run: |
+        echo "body=**Commit:** ${{ github.sha }}\\n**Message:** ${{ github.event.head_commit.message }}" >> $GITHUB_OUTPUT
+
+    - name: Update GitHub Release
+      uses: ncipollo/release-action@v1.21.0
+      with:
+        allowUpdates: true
+        draft: false
+        makeLatest: true
+        prerelease: true
+        name: Nightly Build #${{ github.run_number }} - ${{ github.sha }}
+        tag: nightly
+        body: ${{ steps.body.outputs.body }}
+        token: ${{ github.token }}
+        artifacts: 'drop/wiki-js.tar.gz,drop-win/wiki-js-windows.tar.gz'
 
   # build-do-image:
   #   name: Build DigitalOcean Image
