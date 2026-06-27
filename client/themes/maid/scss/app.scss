@@ -76,7 +76,7 @@ so we need to fix that:
         display: inline;
       }
     }
-    & > p:first-of-type {
+    & > :first-child:not(summary), & > summary + * {
       padding-top: 0;
     }
   }
