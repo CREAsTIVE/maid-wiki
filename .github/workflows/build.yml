@@ -429,6 +429,7 @@ jobs:
         body: ${{ steps.body.outputs.body }}
         token: ${{ github.token }}
         artifacts: 'drop/wiki-js.tar.gz,drop-win/wiki-js-windows.tar.gz'
+        commit: ${{ github.sha }}
 
   # build-do-image:
   #   name: Build DigitalOcean Image
