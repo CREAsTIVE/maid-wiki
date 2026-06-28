@@ -111,11 +111,16 @@ module.exports = class Renderer extends Model {
 
   static async reloadRenderersScripts() {
     WIKI.scriptAssets = []
+    WIKI.styleAssets = []
+
     const renderersDb = await WIKI.models.renderers.query().where('isEnabled', true)
     for (let render of renderersDb) {
       let module = require(`../modules/rendering/${_.kebabCase(render.key)}/renderer.js`)
       if (module.script) {
         WIKI.scriptAssets.push(module.script)
+      }
+      if (module.style) {
+        WIKI.styleAssets.push(module.style)
       }
     }
 

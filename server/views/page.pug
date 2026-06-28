@@ -7,6 +7,16 @@ block head
     != injectCode.head
   if config.features.featurePageComments
     != comments.head
+  if WIKI.scriptAssets
+    each value in WIKI.scriptAssets
+      if typeof value === 'function'
+        script.
+          (!{value.toString()})();
+      else if typeof value === 'string' && value.trim()
+        script !{value}
+  if WIKI.styleAssets
+    each value in WIKI.styleAssets
+      style(type='text/css')!= value
 
 block body
   #root
@@ -38,14 +48,6 @@ block body
         div!= comments.main
   if injectCode.body
     != injectCode.body
-
-  if WIKI.scriptAssets
-    each value in WIKI.scriptAssets
-      if typeof value === 'function'
-        script.
-          (!{value.toString()})();
-      else if typeof value === 'string' && value.trim()
-        script !{value}
 
   if config.features.featurePageComments
     != comments.body
