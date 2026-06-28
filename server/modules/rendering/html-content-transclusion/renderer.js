@@ -1,8 +1,10 @@
 /* global WIKI */
 
 module.exports = {
-  /** @param {import('cheerio')} $  */
-  async init($, config) {
+  /** @param {import('cheerio')} $
+   * @param {string[]} pageCSSInjections
+    */
+  async init($, config, pageCSSInjections) {
     const includes = $('include').toArray()
     for (const e of includes) {
       let path = e.attribs.path
@@ -36,7 +38,7 @@ module.exports = {
       if (!path || !locale) continue
 
       // Fetch the target page
-      let page = await WIKI.models.pages.getPageFromDb({
+      let page = await WIKI.models.pages.getPage({
         path: path,
         locale: locale
       })
@@ -50,6 +52,8 @@ module.exports = {
       }
 
       $e.replaceWith(content)
+
+      pageCSSInjections.push(page.renderStyleInjection)
     }
   }
 }

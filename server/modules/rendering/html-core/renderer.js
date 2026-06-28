@@ -18,13 +18,15 @@ module.exports = {
       return ''
     }
 
+    let pageCSSInjections = []
+
     // --------------------------------
     // STEP: PRE
     // --------------------------------
 
     for (let child of _.reject(this.children, ['step', 'post'])) {
       const renderer = require(`../${_.kebabCase(child.key)}/renderer.js`)
-      await renderer.init($, child.config)
+      await renderer.init($, child.config, pageCSSInjections)
     }
 
     // --------------------------------
@@ -300,7 +302,7 @@ module.exports = {
 
     return {
       output: decodeEscape($.html('body').replace('<body>', '').replace('</body>', '')),
-      styleInjection: styles
+      styleInjection: styles + pageCSSInjections.join('\n')
     }
   }
 }
