@@ -415,7 +415,7 @@ jobs:
     - name: Generate Nightly Body
       id: body
       run: |
-        echo "body=**Commit:** ${{ github.sha }} >> $GITHUB_OUTPUT
+        echo "body=**Commit:** ${{ github.sha }}" >> $GITHUB_OUTPUT
 
     - name: Update GitHub Release (nightly)
       uses: softprops/action-gh-release@v2
