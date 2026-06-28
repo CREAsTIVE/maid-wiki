@@ -1,0 +1,15 @@
+key: htmlContentTransclusion
+title: HTML Content Transclusion
+description: Inline html content from other pages and bake them into page
+author: CREAsTIVE
+icon: mdi-content-copy
+enabledDefault: true
+dependsOn: htmlCore
+priority: -100
+props:
+  defaultLocale:
+    type: String
+    title: Default locale
+    default: "en"
+    hint: If locale not defined it will fallback to that value
+    order: 1
