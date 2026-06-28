@@ -257,6 +257,10 @@ module.exports = {
     // STEP: POST
     // --------------------------------
 
+    $('style').each((i, e) => {
+      $('body').prepend(e)
+    })
+
     let output = decodeEscape($.html('body').replace('<body>', '').replace('</body>', ''))
 
     for (let child of _.sortBy(_.filter(this.children, ['step', 'post']), ['order'])) {
@@ -292,6 +296,10 @@ module.exports = {
 
     $('pre').each((idx, elm) => {
       $(elm).attr('v-pre', true)
+    })
+
+    $('style').each((i, e) => {
+      $('body').prepend(e)
     })
 
     return decodeEscape($.html('body').replace('<body>', '').replace('</body>', ''))
