@@ -150,6 +150,7 @@ module.exports = class Page extends Model {
       publishStartDate: 'string',
       contentType: 'string',
       render: 'string',
+      renderStyleInjection: 'string',
       tags: [
         {
           tag: 'string',
@@ -991,6 +992,7 @@ module.exports = class Page extends Model {
           'pages.publishEndDate',
           'pages.content',
           'pages.render',
+          'pages.renderStyleInjection',
           'pages.toc',
           'pages.contentType',
           'pages.createdAt',
@@ -1070,6 +1072,7 @@ module.exports = class Page extends Model {
       publishStartDate: page.publishStartDate,
       contentType: page.contentType,
       render: page.render,
+      renderStyleInjection: page.renderStyleInjection ?? '',
       tags: page.tags.map(t => _.pick(t, ['tag', 'title'])),
       title: page.title,
       toc: _.isString(page.toc) ? page.toc : JSON.stringify(page.toc),

@@ -17,6 +17,8 @@ block head
   if WIKI.styleAssets
     each value in WIKI.styleAssets
       style(type='text/css')!= value
+  if page.renderStyleInjection
+    != page.renderStyleInjection
 
 block body
   #root

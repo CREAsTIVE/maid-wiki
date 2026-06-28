@@ -253,13 +253,13 @@ module.exports = {
       }
     })
 
+    // Save styles
+
+    let styles = $('style').map((i, e) => `<style>\n${$(e).html()}\n</style>`).toArray()
+
     // --------------------------------
     // STEP: POST
     // --------------------------------
-
-    $('style').each((i, e) => {
-      $('body').prepend(e)
-    })
 
     let output = decodeEscape($.html('body').replace('<body>', '').replace('</body>', ''))
 
@@ -298,11 +298,10 @@ module.exports = {
       $(elm).attr('v-pre', true)
     })
 
-    $('style').each((i, e) => {
-      $('body').prepend(e)
-    })
-
-    return decodeEscape($.html('body').replace('<body>', '').replace('</body>', ''))
+    return {
+      output: decodeEscape($.html('body').replace('<body>', '').replace('</body>', '')),
+      styleInjection: styles
+    }
   }
 }
 

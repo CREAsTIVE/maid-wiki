@@ -193,6 +193,7 @@ type Page {
   tags: [PageTag]!
   content: String! @auth(requires: ["read:source", "write:pages", "manage:system"])
   render: String
+  renderStyleInjection: String
   toc: String
   contentType: String!
   createdAt: Date!

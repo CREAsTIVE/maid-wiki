@@ -20,6 +20,7 @@ module.exports = async (pageId) => {
     const pipeline = await WIKI.models.renderers.getRenderingPipeline(page.contentType)
 
     let output = page.content
+    let styleInjection = []
 
     if (_.isEmpty(page.content)) {
       await WIKI.models.knex.destroy()
@@ -28,12 +29,17 @@ module.exports = async (pageId) => {
 
     for (let core of pipeline) {
       const renderer = require(`../modules/rendering/${_.kebabCase(core.key)}/renderer.js`)
-      output = await renderer.render.call({
+      let renderResult = await renderer.render.call({
         config: core.config,
         children: core.children,
         page: page,
         input: output
       })
+
+      output = typeof renderResult === 'string' ? renderResult : renderResult.output
+      if (renderResult.styleInjection) {
+        styleInjection.push(renderResult.styleInjection)
+      }
     }
 
     // Parse TOC
@@ -73,6 +79,7 @@ module.exports = async (pageId) => {
     await WIKI.models.pages.query()
       .patch({
         render: output,
+        renderStyleInjection: styleInjection.join('\n'),
         toc: JSON.stringify(toc.root)
       })
       .where('id', pageId)
@@ -81,6 +88,7 @@ module.exports = async (pageId) => {
     await WIKI.models.pages.savePageToCache({
       ...page,
       render: output,
+      renderStyleInjection: styleInjection.join('\n'),
       toc: JSON.stringify(toc.root)
     })
 
