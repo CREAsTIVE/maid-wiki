@@ -417,21 +417,25 @@ jobs:
       run: |
         echo "body=**Commit:** ${{ github.sha }}" >> $GITHUB_OUTPUT
 
-    - name: Update GitHub Release (nightly)
-      uses: softprops/action-gh-release@v2
+    - name: Delete existing nightly tag
+      run: |
+        git push origin :refs/tags/nightly || true
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+
+    - name: Update GitHub Release
+      uses: ncipollo/release-action@v1.21.0
       with:
-        tag_name: nightly
-        target_commitish: ${{ github.sha }}
-        name: Nightly Build #${{ github.run_number }} - ${{ github.sha }}
-        body: ${{ steps.body.outputs.body }}
-        prerelease: true
+        allowUpdates: true
         draft: false
-        make_latest: true
-        files: |
-          drop/wiki-js.tar.gz
-          drop-win/wiki-js-windows.tar.gz
-        # If you want to replace existing assets, use `fail_on_unmatched_files: true`
-        # but it will replace all assets with the new ones by default.
+        makeLatest: true
+        prerelease: true
+        name: Nightly Build #${{ github.run_number }} - ${{ github.sha }}
+        tag: nightly
+        body: ${{ steps.body.outputs.body }}
+        token: ${{ github.token }}
+        artifacts: 'drop/wiki-js.tar.gz,drop-win/wiki-js-windows.tar.gz'
+        commit: ${{ github.sha }}
 
   # build-do-image:
   #   name: Build DigitalOcean Image
