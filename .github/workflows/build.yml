@@ -415,7 +415,7 @@ jobs:
     - name: Generate Nightly Body
       id: body
       run: |
-        echo "body=**Commit:** ${{ github.sha }}\\n**Message:** ${{ github.event.head_commit.message }}" >> $GITHUB_OUTPUT
+        echo "body=**Commit:** ${{ github.sha }}, **Message:** ${{ github.event.head_commit.message }}" >> $GITHUB_OUTPUT
 
     - name: Update GitHub Release
       uses: ncipollo/release-action@v1.21.0
