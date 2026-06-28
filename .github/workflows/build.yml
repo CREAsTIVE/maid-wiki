@@ -417,28 +417,19 @@ jobs:
       run: |
         echo "body=**Commit:** ${{ github.sha }}" >> $GITHUB_OUTPUT
 
-    - name: Update nightly tag and release
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        git tag -f nightly ${{ github.sha }}
-        git push -f origin nightly
-
-        if gh release view nightly &>/dev/null; then
-          gh release edit nightly \
-            --title "Nightly Build #${{ github.run_number }} - ${{ github.sha }}" \
-            --notes "**Commit:** ${{ github.sha }}, **Latest message:** ${{ github.event.head_commit.message }}" \
-            --prerelease \
-            --target ${{ github.sha }}
-        else
-          gh release create nightly \
-            --title "Nightly Build #${{ github.run_number }} - ${{ github.sha }}" \
-            --notes "**Commit:** ${{ github.sha }}, **Latest Message:** ${{ github.event.head_commit.message }}" \
-            --prerelease \
-            --target ${{ github.sha }}
-        fi
-
-        gh release upload nightly drop/wiki-js.tar.gz drop-win/wiki-js-windows.tar.gz --clobber
+    - name: Update GitHub Release
+      uses: ncipollo/release-action@v1.21.0
+      with:
+        allowUpdates: true
+        draft: false
+        makeLatest: true
+        prerelease: true
+        name: Nightly Build #${{ github.run_number }} - ${{ github.sha }}
+        tag: nightly
+        body: ${{ steps.body.outputs.body }}
+        token: ${{ github.token }}
+        artifacts: 'drop/wiki-js.tar.gz,drop-win/wiki-js-windows.tar.gz'
+        commit: ${{ github.sha }}
 
   # build-do-image:
   #   name: Build DigitalOcean Image
