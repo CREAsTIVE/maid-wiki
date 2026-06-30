@@ -1,0 +1,8 @@
+key: htmlTemplate
+title: HTML Template support (NOT IMPLEMENTED)
+description: Create and use templates in one document
+author: CREAsTIVE
+icon: mdi-content-copy
+enabledDefault: false
+dependsOn: htmlCore
+props: {}
