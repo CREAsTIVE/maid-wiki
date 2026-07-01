@@ -1,0 +1,8 @@
+key: htmlUnp
+title: HTML Un-p component
+description: Delete direct childrens <p> component
+author: CREAsTIVE
+icon: mdi-cog
+enabledDefault: false
+dependsOn: htmlCore
+props: {}
